@@ -1,0 +1,28 @@
+// https://nuxt.com/docs/api/configuration/nuxt-config
+export default defineNuxtConfig({
+  compatibilityDate: '2024-04-03',
+  devtools: { enabled: true },
+  ssr: false, // ใช้โหมด Single Page Application (SPA)
+  target: 'static',
+  head: {
+    title: 'Point System',
+    meta: [
+      { charset: 'utf-8' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+
+    ],
+    link: [
+      {
+        rel: 'stylesheet',
+        href: 'https://fonts.googleapis.com/icon?family=Material+Icons'
+      }
+    ]
+  },
+  css: ['@/assets/tailwind.css'],
+  buildModules: [],
+  modules: [
+    '@nuxtjs/tailwindcss',
+    '@pinia/nuxt',
+  ],
+  build: {},
+})

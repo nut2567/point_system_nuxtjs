@@ -1,0 +1,7 @@
+
+services:
+  # Backend service
+  backend:
+    build: .
+    ports:
+      - "5000:5000"  # พอร์ตที่ backend ฟัง
