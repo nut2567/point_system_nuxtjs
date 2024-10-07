@@ -1,6 +1,7 @@
 // middleware/auth.js
 import { useMyStore } from "~/stores/index";
 const store = useMyStore();
+const router = useRouter();
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
     const token = localStorage.getItem('token');

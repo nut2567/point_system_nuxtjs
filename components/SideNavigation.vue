@@ -1,43 +1,94 @@
 <template>
-  <div
-    class="flex flex-col w-25 h-full bg-gray-800 text-white fixed left-0 top-0"
-  >
-    <div class="p-4 text-lg font-bold">My App</div>
-    <nav class="flex flex-col space-y-2 mt-4">
-      <NuxtLink
-        to="/home"
-        class="flex items-center p-2 hover:bg-gray-700 rounded"
+  <div>
+    <div
+      class="fixed inset-0 w-64 bg-gray-800 text-white flex flex-col transform transition-transform duration-300 ease-in-out z-50"
+      :class="{
+        '-translate-x-full': !isSidebarOpen && isMobile,
+        'translate-x-0': isSidebarOpen || !isMobile,
+      }"
+    >
+      <div class="p-4 text-lg font-bold">My App</div>
+      <nav class="flex flex-col space-y-2 mt-4">
+        <NuxtLink
+          to="/home"
+          class="flex items-center p-2 hover:bg-gray-700 rounded"
+        >
+          <span class="ml-2">Home</span>
+        </NuxtLink>
+        <NuxtLink
+          to="/reward"
+          class="flex items-center p-2 hover:bg-gray-700 rounded"
+        >
+          <span class="ml-2">Rewards</span>
+        </NuxtLink>
+        <NuxtLink
+          to="/profile"
+          class="flex items-center p-2 hover:bg-gray-700 rounded"
+        >
+          <span class="ml-2">Profile</span>
+        </NuxtLink>
+        <div
+          @click="logout"
+          class="flex items-center p-2 hover:bg-gray-700 rounded cursor-pointer"
+        >
+          <span class="ml-2">Logout</span>
+        </div>
+      </nav>
+    </div>
+    <!-- Hamburger Icon for Mobile -->
+    <button
+      class="fixed top-4 left-4 z-50 text-white bg-gray-800 p-2 rounded-md focus:outline-none sm:hidden"
+      @click="toggleSidebar"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        class="w-6 h-6"
       >
-        <span class="ml-2">Home</span>
-      </NuxtLink>
-      <NuxtLink
-        to="/reward"
-        class="flex items-center p-2 hover:bg-gray-700 rounded"
-      >
-        <span class="ml-2">Rewards</span>
-      </NuxtLink>
-      <NuxtLink
-        to="/profile"
-        class="flex items-center p-2 hover:bg-gray-700 rounded"
-      >
-        <span class="ml-2">Profile</span>
-      </NuxtLink>
-      <div
-        @click="logout"
-        class="flex items-center p-2 hover:bg-gray-700 rounded"
-      >
-        <span class="ml-2">Logout</span>
-      </div>
-    </nav>
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M4 6h16M4 12h16m-7 6h7"
+        />
+      </svg>
+    </button>
   </div>
 </template>
   
   <script setup>
-  import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 import { useMyStore } from "~/stores/index";
 
 const store = useMyStore();
 const router = useRouter();
+const isSidebarOpen = ref(false); // ตัวแปรเพื่อจัดการการเปิด/ปิดของ Sidebar
+const isMobile = ref(false); // ตัวแปรเพื่อเช็คว่ากำลังอยู่ในโหมดมือถือหรือไม่
+
+const toggleSidebar = () => {
+  // ฟังก์ชันสำหรับเปิด/ปิด Sidebar
+  isSidebarOpen.value = !isSidebarOpen.value;
+};
+
+const checkScreenSize = () => {
+  // ฟังก์ชันเช็คขนาดหน้าจอ
+  if (window.innerWidth >= 640) {
+    isSidebarOpen.value = true; // ถ้าหน้าจอใหญ่กว่า 640px ให้เปิด Sidebar
+    isMobile.value = false;
+  } else {
+    isSidebarOpen.value = false; // ถ้าหน้าจอเล็กกว่า 640px ให้ซ่อน Sidebar
+    isMobile.value = true;
+  }
+};
+
+onMounted(() => {
+  // เมื่อ component ถูก mount ให้เช็คขนาดหน้าจอ
+  checkScreenSize();
+  window.addEventListener("resize", checkScreenSize); // ตรวจสอบเมื่อหน้าจอมีการ resize
+});
+
 // ฟังก์ชัน Logout
 const logout = () => {
   Swal.fire({

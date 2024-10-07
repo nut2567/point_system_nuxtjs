@@ -1,9 +1,9 @@
 <template>
-  <div>
-    <Header />
+  <div class="">
+    <Header class="ml-20" />
     <div class="flex">
       <SideNavigation />
-      <div class="flex-grow p-4 ml-64">
+      <div class="flex-grow p-4 ml-20">
         <NuxtPage />
       </div>
     </div>
@@ -28,9 +28,4 @@ import Header from "~/components/Header.vue";
   flex-grow: 1; 
 }
 
-@media (max-width: 768px) {
-  .ml-64 {
-    margin-left: 0; 
-  }
-}
 </style>

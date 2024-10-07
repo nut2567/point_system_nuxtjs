@@ -1,8 +1,12 @@
 <template>
   <div class="reward-detail-page">
-    <button class="back-button" @click="goBackToHome">
+    <button
+      class="back-button px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 text-sm md:text-base lg:text-lg"
+      @click="goBackToHome"
+    >
       &larr; Back to Home
     </button>
+
     <div class="reward-detail-container">
       <img :src="reward.image" alt="Reward Image" class="reward-image" />
       <div class="reward-info">
@@ -39,7 +43,7 @@ const route = useRoute();
 const UsedReward = ref(true);
 
 definePageMeta({
-  middleware: 'token'
+  middleware: "token",
 });
 
 const reward = ref({
@@ -58,14 +62,12 @@ const id = computed(() => {
   return route.query?.id || "Unknown ID";
 });
 
-onMounted(async() => {
+onMounted(async () => {
   fetchRewardDetails(id.value);
 
-  let coupong =await store.fetchUserProfile();
-  console.log("coupong" ,coupong.coupong);
-  let foundReward = coupong.coupong.some(
-    (item) => item.reward_id == id.value
-  );
+  let coupong = await store.fetchUserProfile();
+  console.log("coupong", coupong.coupong);
+  let foundReward = coupong.coupong.some((item) => item.reward_id == id.value);
   if (foundReward) {
     UsedReward.value = !foundReward;
   }
@@ -102,7 +104,7 @@ const fetchredeemReward = async (rewardId) => {
     if (foundReward) {
       UsedReward.value = !foundReward;
     }
-    await store.fetchUserProfile()
+    await store.fetchUserProfile();
     Swal.fire({
       position: "top",
       icon: "success",
@@ -165,7 +167,7 @@ const goBackToHome = () => {
 .back-button {
   position: absolute; /* ทำให้ตำแหน่งอยู่ที่มุมซ้าย */
   top: 2rem; /* ระยะจากด้านบน */
-  left: 7rem; /* ระยะจากด้านซ้าย */
+  left: 12rem; /* ระยะจากด้านซ้าย */
   display: inline-flex;
   align-items: center;
   padding: 0.75rem 1.5rem;
@@ -231,7 +233,7 @@ const goBackToHome = () => {
 </style>
 
 <style scoped lang="scss">
-.redeem-button-disabled{
+.redeem-button-disabled {
   background: gray;
   color: white;
   border: none;
