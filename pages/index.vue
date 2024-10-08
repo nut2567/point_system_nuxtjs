@@ -48,7 +48,9 @@
           </button>
         </div>
       </form>
-
+      <div class="text-red-500 mt-3 flex justify-center" v-if="!StatusLogin">
+        <p>username or password invalid</p>
+      </div>
       <!-- Forgot Password & Signup -->
       <div class="mt-6 text-center">
         <a href="#" class="text-blue-500 hover:underline"
@@ -65,6 +67,7 @@
 <script setup>
 // State
 const username = ref("");
+const StatusLogin = ref(true);
 const password = ref("");
 import { useMyStore } from "~/stores/index";
 
@@ -72,8 +75,8 @@ const store = useMyStore();
 const router = useRouter();
 
 definePageMeta({
-  layout: 'empty', 
-  middleware: 'auth'
+  layout: "empty",
+  middleware: "auth",
 });
 
 const login = async () => {
@@ -84,12 +87,10 @@ const login = async () => {
     const response = await store.login(username.value, password.value);
 
     console.log(response);
-    if (
-      response &&
-      response.message === "Login successful"
-    ) {
+    if (response && response.message === "Login successful") {
       router.push("/home"); // เปลี่ยนเส้นทางไปยังหน้า Home
     } else {
+      StatusLogin.value = false;
       console.error("Login failed:");
     }
   } catch (error) {

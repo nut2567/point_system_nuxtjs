@@ -39,8 +39,7 @@
 </template>
 
 <script setup>
-import RewardCard from "@/components/RewardCard.vue";
-import RewardsCarousel from "~/components/ProductCarousel.vue";
+
 import axios from "axios";
 import { ref, computed, onMounted } from "vue";
 import { useMyStore } from "~/stores/index";
