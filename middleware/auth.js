@@ -3,7 +3,8 @@ import { useMyStore } from "~/stores/index";
 const store = useMyStore();
 
 export default defineNuxtRouteMiddleware(async (to, from) => {
-  const token = localStorage.getItem('token');
+  const token = useCookie('token').value;
+  // localStorage.getItem('token');
 
   if (token) {
     // ตรวจสอบว่าโทเคนหมดอายุหรือไม่

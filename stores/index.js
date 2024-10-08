@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia';
 
-const router = useRouter();
 import axios from "axios";
 
 export const useMyStore = defineStore('myStore', {
@@ -24,14 +23,14 @@ export const useMyStore = defineStore('myStore', {
                 });
                 console.log("Logging in with:", response);
                 this.token = response.data._rawValue.token;
-                localStorage.setItem("token", response.data._rawValue.token); // เก็บ token ใน local storage
-                return response.data._rawValue
+                useCookie('token').value = this.token ;
+                return  response.data._rawValue;
             } catch (error) {
                 console.error("Login error:", error);
             }
         },
 
-        async getUserLocal(token = localStorage.getItem("token")) {// ดึง token จาก localStorage
+        async getUserLocal(token = useCookie('token').value) {// ดึง token จาก localStorage
 
             function base64UrlDecode(str) {
                 return decodeURIComponent(
@@ -58,7 +57,7 @@ export const useMyStore = defineStore('myStore', {
                 console.error("Token is missing");
             }
         },
-        async fetchUserProfile(token = localStorage.getItem("token")) {
+        async fetchUserProfile(token= useCookie('token').value) {
             try {
                 const response = await axios.get('http://localhost:5000/users/profile', {
                     headers: {

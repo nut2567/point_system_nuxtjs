@@ -20,6 +20,12 @@
   
   const store = useMyStore();
   store.fetchUserProfile();
+
+  const firstname = useState('firstname', () => '');  // เริ่มต้นเป็นค่าว่าง
+  firstname.value = store.userinfo.name;  // การเปลี่ยนค่า
+  const user_points = useState('user', () => '');  // เริ่มต้นเป็นค่าว่าง
+  user_points.value = store.userinfo.points;  // การเปลี่ยนค่า
+
   </script>
   
   <style scoped>

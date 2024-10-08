@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
-  ssr: false, // ใช้โหมด Single Page Application (SPA)
+  ssr: true, 
   target: 'static',
   head: {
     title: 'Point System',

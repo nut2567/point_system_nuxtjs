@@ -1,7 +1,6 @@
 <template>
-  <div class="flex flex-col items-center ">
+  <div class="flex flex-col items-center">
     <div class="flex flex-col items-center w-full max-w-4xl mt-4">
-
       <ProductCarousel />
 
       <div class="mt-4 w-full">
@@ -39,9 +38,6 @@
 </template>
 
 <script setup>
-
-import axios from "axios";
-import { ref, computed, onMounted } from "vue";
 import { useMyStore } from "~/stores/index";
 
 const store = useMyStore();
@@ -54,6 +50,31 @@ definePageMeta({
   middleware: "token",
 });
 
+const { data, pending, error, execute } = useFetch(
+  "http://localhost:5000/rewards",
+  {
+    method: "GET",
+    // lazy: true, // กำหนดให้โหลดข้อมูลเฉพาะเมื่อเรียกใช้งาน
+  }
+);
+
+// ฟังก์ชันที่จะทำให้ data เริ่มโหลด
+const fetchRewards = async () => {
+  await execute(); // เรียกใช้งาน execute เพื่อโหลดข้อมูล
+  // ตรวจสอบสถานะการโหลดข้อมูล
+  if (data.value) {
+    rewards.value = data.value; // นำข้อมูลที่ได้จาก data ไปเก็บใน rewards
+  }
+  // ตรวจสอบข้อผิดพลาด
+  if (error.value) {
+    console.error("Error fetching rewards:", error.value); // แสดงข้อผิดพลาด
+  }
+};
+
+// เรียกใช้ฟังก์ชันเมื่อ component ถูก mount
+onMounted(() => {
+  fetchRewards();
+});
 const totalPages = computed(() => {
   return Math.ceil(rewards.value.length / itemsPerPage);
 });
@@ -68,26 +89,7 @@ const paginatedRewards = computed(() => {
 const goToRewardDetail = (id) => {
   router.push({ path: `/reward-detail`, query: { id } });
 };
-
-onMounted(() => {
-
-  // เรียกใช้ fetchRewards เมื่อ component ถูก mount
-  fetchRewards();
-});
-
-
-const fetchRewards = async () => {
-
-  try {
-    const response = await axios.get("http://localhost:5000/rewards");
-    rewards.value = response.data;
-    console.log(response);
-  } catch (error) {
-    console.error("Error fetching rewards:", error);
-  }
-};
 </script>
 
 <style scoped>
-
 </style>

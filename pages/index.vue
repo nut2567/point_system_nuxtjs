@@ -87,7 +87,8 @@ const login = async () => {
     const response = await store.login(username.value, password.value);
 
     console.log(response);
-    if (response && response.message === "Login successful") {
+    if (response && response.token) {
+      localStorage.setItem("token", response.token); // เก็บ token ใน local storage
       router.push("/home"); // เปลี่ยนเส้นทางไปยังหน้า Home
     } else {
       StatusLogin.value = false;
