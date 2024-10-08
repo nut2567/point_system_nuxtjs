@@ -10,9 +10,9 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     // ตรวจสอบว่าโทเคนหมดอายุหรือไม่
     const decodedToken = await store.fetchUserProfile()
 
-    console.log("decodedToken", decodedToken);
+    // console.log("decodedToken", decodedToken);
     if (decodedToken && decodedToken.status === 200) { // Redirect ไปหน้า home ถ้าโทเคนยังไม่หมดอายุ
+      return navigateTo('/home');
     }
-    return navigateTo('/home');
   }
 });

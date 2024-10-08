@@ -19,6 +19,7 @@
             id="username"
             class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
             placeholder="Enter your username"
+            autocomplete="current-password"
           />
         </div>
 
@@ -36,6 +37,7 @@
             id="password"
             class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
             placeholder="Enter your password"
+            autocomplete="current-password"
           />
         </div>
         <!-- Submit Button -->

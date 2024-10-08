@@ -14,17 +14,23 @@ export const useMyStore = defineStore('myStore', {
     actions: {
         async login(username, password) {
             try {
-                const response = await useFetch("http://localhost:5000/users/login", {
-                    method: "POST",
-                    body: {
+                const response = await axios.post('http://localhost:5000/users/login', {                    
                         username: username,
                         password: password,
-                    },
                 });
+                // const response = await useFetch("http://localhost:5000/users/login", {
+                //     method: "POST",
+                //     body: {
+                //         username: username,
+                //         password: password,
+                //     },
+                // });
                 console.log("Logging in with:", response);
-                this.token = response.data._rawValue.token;
+                // this.token = response.data._rawValue.token;
+                this.token = response.data.token;
                 useCookie('token').value = this.token ;
-                return  response.data._rawValue;
+                await this.fetchUserProfile(this.token)
+                return  response.data;
             } catch (error) {
                 console.error("Login error:", error);
             }
@@ -48,7 +54,7 @@ export const useMyStore = defineStore('myStore', {
                     const payload = parts[1];
                     const decodedPayload = base64UrlDecode(payload);
                     const userData = JSON.parse(decodedPayload);
-                    console.log("userInfo", userData); // ข้อมูลใน JWT token
+                    // console.log("userInfo", userData); // ข้อมูลใน JWT token
                     this.userinfo = userData.userInfo
                 } else {
                     console.error("Invalid token format");
@@ -65,7 +71,7 @@ export const useMyStore = defineStore('myStore', {
                     }
                 });
                 this.userinfo = response.data; // Set user data
-                console.log("userInfo", response.data);
+                // console.log("userInfo", response.data);
                 return response.data;
             } catch (error) {
                 console.error('Error fetching user profile:', error);
@@ -75,4 +81,4 @@ export const useMyStore = defineStore('myStore', {
         },
 
     },
-});
+}); 

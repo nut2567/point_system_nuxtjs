@@ -54,7 +54,7 @@ const { data, pending, error, execute } = useFetch(
   "http://localhost:5000/rewards",
   {
     method: "GET",
-    // lazy: true, // กำหนดให้โหลดข้อมูลเฉพาะเมื่อเรียกใช้งาน
+    lazy: true, // กำหนดให้โหลดข้อมูลเฉพาะเมื่อเรียกใช้งาน
   }
 );
 
