@@ -57,33 +57,25 @@ export const useMyStore = defineStore('myStore', {
         },
         async fetchUserProfile(token = useCookie('token').value) {
 
-            // ใช้ useFetch ในการดึงข้อมูลแทน axios for ssr
-            const { data, error } = await useFetch('http://localhost:5000/users/profile', {
-                method: "get",
-                headers: {
-                    Authorization: `Bearer ${token}` // ส่ง token ถ้ามี
-                }
-            });
-
-            // ตรวจสอบข้อผิดพลาด
-            if (error.value) {
-                console.error('Error fetching user profile:', error.value);
-            }
-
-            this.userinfo = data.value;
-            return data.value;
-
             try {
-                const response = await axios.get('http://localhost:5000/users/profile', {
+                // ใช้ useFetch ในการดึงข้อมูลแทน axios for ssr
+                const { data, error } = await useFetch('http://localhost:5000/users/profile', {
+                    method: "get",
                     headers: {
                         Authorization: `Bearer ${token}` // ส่ง token ถ้ามี
                     }
                 });
-                this.userinfo = response.data; // Set user data
-                // console.log("userInfo", response.data);
-                return response.data;
+
+                // ตรวจสอบข้อผิดพลาด
+                if (error.value) {
+                    console.error('Error fetching user profile:', error.value);
+                    return { data:  error.value};
+                }
+
+                this.userinfo = data.value;
+                return { data: data.value };
             } catch (error) {
-                console.error('Error fetching user profile:', error);
+                // console.error('Error fetching user profile:', error);
                 // ตรวจสอบว่าโทเคนหมดอายุหรือไม่
                 return error.response
             }

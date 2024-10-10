@@ -32,42 +32,19 @@ const store = useMyStore();
 
 const Product = ref([]);
 
-// const fetchProducts = async () => {
-//   try {
-//     const response = await axios.get("http://localhost:5000/Product");
-//     Product.value = response.data;
-//     console.log(response);
-//   } catch (error) {
-//     console.error("Error fetching Product", error);
-//   }
-// };
-
-// // เรียกใช้ fetchProducts เมื่อ component ถูก mount
-// fetchProducts();
-
-const { data, pending, error, execute } = useFetch(
-  "http://localhost:5000/Product",
-  {
-    method: "GET",
-    lazy: true, // กำหนดให้โหลดข้อมูลเฉพาะเมื่อเรียกใช้งาน
-  }
-);
-
-// ฟังก์ชันที่จะทำให้ data เริ่มโหลด
-const fetchProduct = async () => {
-  await execute(); // เรียกใช้งาน execute เพื่อโหลดข้อมูล
-  // ตรวจสอบสถานะการโหลดข้อมูล
-  if (data.value) {
-    Product.value = data.value; // นำข้อมูลที่ได้จาก data ไปเก็บใน Product
-  }
-  // ตรวจสอบข้อผิดพลาด
-  if (error.value) {
-    console.error("Error fetching Product:", error.value); // แสดงข้อผิดพลาด
+const fetchProducts = async () => {
+  try {
+    const response = await axios.get("http://localhost:5000/Product");
+    Product.value = response.data;
+    console.log(response);
+  } catch (error) {
+    console.error("Error fetching Product", error);
   }
 };
 
+fetchProducts();
+
 onMounted(() => {
-  fetchProduct();
   intervalId.value = setInterval(scrollCarousel, 3000); // เลื่อนทุก ๆ 3 วินาที
 });
 

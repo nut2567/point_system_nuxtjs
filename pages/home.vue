@@ -39,6 +39,7 @@
 
 <script setup>
 import { useMyStore } from "~/stores/index";
+import axios from "axios";
 
 const store = useMyStore();
 const router = useRouter();
@@ -54,7 +55,7 @@ const { data, pending, error, execute } = useFetch(
   "http://localhost:5000/rewards",
   {
     method: "GET",
-    lazy: true, // กำหนดให้โหลดข้อมูลเฉพาะเมื่อเรียกใช้งาน
+    // lazy: true, // กำหนดให้โหลดข้อมูลเฉพาะเมื่อเรียกใช้งาน
   }
 );
 
