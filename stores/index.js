@@ -14,23 +14,15 @@ export const useMyStore = defineStore('myStore', {
     actions: {
         async login(username, password) {
             try {
-                const response = await axios.post('http://localhost:5000/users/login', {                    
-                        username: username,
-                        password: password,
+                const response = await axios.post('http://localhost:5000/users/login', {
+                    username: username,
+                    password: password,
                 });
-                // const response = await useFetch("http://localhost:5000/users/login", {
-                //     method: "POST",
-                //     body: {
-                //         username: username,
-                //         password: password,
-                //     },
-                // });
                 console.log("Logging in with:", response);
-                // this.token = response.data._rawValue.token;
                 this.token = response.data.token;
-                useCookie('token').value = this.token ;
+                useCookie('token').value = this.token;
                 await this.fetchUserProfile(this.token)
-                return  response.data;
+                return response.data;
             } catch (error) {
                 console.error("Login error:", error);
             }
@@ -63,7 +55,24 @@ export const useMyStore = defineStore('myStore', {
                 console.error("Token is missing");
             }
         },
-        async fetchUserProfile(token= useCookie('token').value) {
+        async fetchUserProfile(token = useCookie('token').value) {
+
+            // ใช้ useFetch ในการดึงข้อมูลแทน axios for ssr
+            const { data, error } = await useFetch('http://localhost:5000/users/profile', {
+                method: "get",
+                headers: {
+                    Authorization: `Bearer ${token}` // ส่ง token ถ้ามี
+                }
+            });
+
+            // ตรวจสอบข้อผิดพลาด
+            if (error.value) {
+                console.error('Error fetching user profile:', error.value);
+            }
+
+            this.userinfo = data.value;
+            return data.value;
+
             try {
                 const response = await axios.get('http://localhost:5000/users/profile', {
                     headers: {
