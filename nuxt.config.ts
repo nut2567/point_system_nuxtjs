@@ -27,7 +27,7 @@ export default defineNuxtConfig({
   nitro: {
     // เพิ่ม middleware ที่เราเขียนลงใน nitro
     routeRules: {
-      '/api/**': { middleware: ['logger'] },
+      '/api/**': { appMiddleware: ['logger'] },
     },
   },
   build: {},
