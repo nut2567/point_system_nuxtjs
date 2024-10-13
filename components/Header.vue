@@ -24,7 +24,10 @@
 import { useMyStore } from "~/stores/index";
 
 const store = useMyStore();
-// store.fetchUserProfile()
+
+if (process.server) {
+  store.fetchUserProfile();
+}
 </script>
   
   <style scoped>

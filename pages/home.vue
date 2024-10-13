@@ -38,10 +38,7 @@
 </template>
 
 <script setup>
-import { useMyStore } from "~/stores/index";
-import axios from "axios";
 
-const store = useMyStore();
 const router = useRouter();
 const rewards = ref([]);
 const currentPage = ref(1);

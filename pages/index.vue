@@ -73,6 +73,7 @@ const StatusLogin = ref(true);
 const password = ref("");
 import { useMyStore } from "~/stores/index";
 
+import axios from "axios";
 const store = useMyStore();
 const router = useRouter();
 
@@ -86,11 +87,16 @@ const login = async () => {
   console.log("Password:", password.value);
 
   try {
-    const response = await store.login(username.value, password.value);
-
-    console.log(response);
-    if (response && response.token) {
+    const response = await axios.post("http://localhost:5000/users/login", {
+      username: username.value,
+      password: password.value,
+    });
+    console.log("Logging in with:", response);
       // localStorage.setItem("token", response.token); // เก็บ token ใน local storage
+    useCookie("token").value = response.data.token;
+
+    console.log(response.data);
+    if (response.data && response.data.token) {
       router.push("/home"); // เปลี่ยนเส้นทางไปยังหน้า Home
     } else {
       StatusLogin.value = false;

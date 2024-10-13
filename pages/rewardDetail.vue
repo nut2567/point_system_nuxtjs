@@ -46,28 +46,19 @@ definePageMeta({
   middleware: "token",
 });
 
-const reward = ref({
-  id: 1,
-  title: "Discount Coupon",
-  pointsRequired: 100,
-  image: "./images/discount.jpg",
-  description:
-    "Save 10% on your next purchase with this exclusive discount coupon.",
-  expiryDate: "2024-12-31",
-});
+const reward = ref({});
 
 // ตรวจสอบว่ามี id หรือไม่
 const id = computed(() => {
   console.log(route.query);
   return route.query?.id || "Unknown ID";
 });
-
 onMounted(async () => {
   fetchRewardDetails(id.value);
 
-  let coupong = await store.fetchUserProfile();
-  console.log("coupong", coupong.coupong);
-  let foundReward = coupong.coupong.some((item) => item.reward_id == id.value);
+  console.log("coupong", store.userinfo.coupong);
+  const coupong = store.userinfo.coupong
+  let foundReward = coupong.some((item) => item.reward_id == id.value);
   if (foundReward) {
     UsedReward.value = !foundReward;
   }

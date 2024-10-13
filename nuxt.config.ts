@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
-  ssr: true, 
+  ssr: true,
   target: 'static',
   head: {
     title: 'Point System',
@@ -23,6 +23,12 @@ export default defineNuxtConfig({
   modules: [
     '@nuxtjs/tailwindcss',
     '@pinia/nuxt',
-  ],
+  ], 
+  nitro: {
+    // เพิ่ม middleware ที่เราเขียนลงใน nitro
+    routeRules: {
+      '/api/**': { middleware: ['logger'] },
+    },
+  },
   build: {},
 })

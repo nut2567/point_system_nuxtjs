@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia';
 
-import axios from "axios";
 
 export const useMyStore = defineStore('myStore', {
     state: () => ({
@@ -12,22 +11,6 @@ export const useMyStore = defineStore('myStore', {
         idProduct: null,
     }),
     actions: {
-        async login(username, password) {
-            try {
-                const response = await axios.post('http://localhost:5000/users/login', {
-                    username: username,
-                    password: password,
-                });
-                console.log("Logging in with:", response);
-                this.token = response.data.token;
-                useCookie('token').value = this.token;
-                await this.fetchUserProfile(this.token)
-                return response.data;
-            } catch (error) {
-                console.error("Login error:", error);
-            }
-        },
-
         async getUserLocal(token = useCookie('token').value) {// ดึง token จาก localStorage
 
             function base64UrlDecode(str) {
@@ -68,7 +51,7 @@ export const useMyStore = defineStore('myStore', {
 
                 // ตรวจสอบข้อผิดพลาด
                 if (error.value) {
-                    console.error('Error fetching user profile:', error.value);
+                    console.error('Error fetching user profile:', error);
                     return { data:  error.value};
                 }
 

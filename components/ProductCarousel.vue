@@ -1,11 +1,15 @@
 <template>
   <div class="rewards-carousel">
     <h2 class="carousel-title">Exclusive Product</h2>
-    <div class="carousel-container">
+    <div
+      class="carousel-container"
+      @mouseenter="stopCarousel"
+      @mouseleave="startCarousel"
+    >
       <div
         class="carousel-track"
         ref="track"
-        :style="{ transform: `translateX(-${currentIndex * 100}%)` }"
+        :style="{ transform: `translateX(-${currentIndex}px)` }"
       >
         <div
           class="reward-card w-1/2"
@@ -17,9 +21,9 @@
           <p class="reward-points">{{ reward.points }} Points</p>
         </div>
       </div>
+      <button @click="scrollLeft" class="scroll-button left">←</button>
+      <button @click="scrollRight" class="scroll-button right">→</button>
     </div>
-    <button @click="scrollLeft" class="scroll-button left">←</button>
-    <button @click="scrollRight" class="scroll-button right">→</button>
   </div>
 </template>
 
@@ -45,7 +49,7 @@ const fetchProducts = async () => {
 fetchProducts();
 
 onMounted(() => {
-  intervalId.value = setInterval(scrollCarousel, 3000); // เลื่อนทุก ๆ 3 วินาที
+  startCarousel();
 });
 
 const track = ref(null);
@@ -54,47 +58,57 @@ const intervalId = ref(null);
 
 const totalProducts = () => Product.value.length; // จำนวนผลิตภัณฑ์
 
-const scrollAmount = 500; // ปรับจำนวนการเลื่อนให้เป็นขนาดคาร์เซิล
+const scrollAmount = 468; // ปรับจำนวนการเลื่อนให้เป็นขนาดคาร์เซิล
 const scrollCarousel = () => {
   if (track.value) {
-    const maxScroll = track.value.scrollWidth - track.value.clientWidth; // ตำแหน่งเลื่อนสูงสุด
+    const maxScroll = track.value.scrollWidth; // ตำแหน่งเลื่อนสูงสุด
 
     // คำนวณ currentIndex โดยเพิ่มขึ้น 1 กล่องทุกครั้ง
-    currentIndex.value = (currentIndex.value + 1) % Math.ceil(totalProducts());
+    currentIndex.value += scrollAmount;
 
+    // console.log(
+    //   "scrollCarousel",
+    //   track.value.scrollWidth,
+    //   track.value.clientWidth,
+    //   currentIndex.value
+    // );
     // ถ้า currentIndex ถึงสุดให้กลับไปเริ่มต้นใหม่
-    if (currentIndex.value === 0) {
-      track.value.scrollTo({ left: 0, behavior: "smooth" });
-    } else {
-      const newScrollPosition = currentIndex.value * scrollAmount; // คำนวณตำแหน่งใหม่
-      track.value.scrollTo({ left: newScrollPosition, behavior: "smooth" });
+    if (currentIndex.value >= maxScroll) {
+      currentIndex.value = 0;
     }
   }
 };
 
+function stopCarousel() {
+  clearInterval(intervalId.value);
+}
+
+function startCarousel() {
+  intervalId.value = setInterval(scrollCarousel, 3000);
+}
+
 const scrollLeft = () => {
-  if (track.value) {
-    const currentScroll = track.value.scrollLeft;
-    track.value.scrollTo({
-      left: currentScroll - scrollAmount,
-      behavior: "smooth",
-    });
+  const maxScroll = track.value.scrollWidth;
+  // console.log("scrollLeft", track.value);
+  if (currentIndex.value - scrollAmount >= 0) {
+    currentIndex.value -= scrollAmount;
+  } else {
+    currentIndex.value = maxScroll;
   }
 };
 
 const scrollRight = () => {
-  if (track.value) {
-    const currentScroll = track.value.scrollLeft;
-    track.value.scrollTo({
-      left: currentScroll + scrollAmount,
-      behavior: "smooth",
-    });
+  // console.log("scrollRight", track.value);
+  const maxScroll = track.value.scrollWidth;
+  if (currentIndex.value + scrollAmount <= maxScroll) {
+    currentIndex.value += scrollAmount;
+  } else {
+    currentIndex.value = 0;
   }
 };
 
-
 onBeforeUnmount(() => {
-  clearInterval(intervalId.value); // เคลียร์ interval เมื่อคอมโพเนนต์ถูกทำลาย
+  stopCarousel(); // เคลียร์ interval เมื่อคอมโพเนนต์ถูกทำลาย
 });
 </script>
 
