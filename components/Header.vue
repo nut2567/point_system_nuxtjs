@@ -1,7 +1,7 @@
 <template>
-  <div class="flex flex-col items-center w-full">
+  <div class="flex flex-col items-center">
     <header
-      class="header w-full bg-blue-600 text-white p-4 text-center text-2xl"
+      class="header  bg-blue-600 text-white p-4 text-center text-2xl"
     >
       Welcome to the Points System
     </header>

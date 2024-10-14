@@ -6,8 +6,11 @@ export default defineEventHandler((event) => {
   const request = event.node.req;
   const response = event.node.res;
 
-  // สร้าง message สำหรับ log
-  const message = `${request.method} ${getRequestURL(event)} : ${moment().format()}`;
+  // ดึง IP address
+  const ip = request.headers['x-forwarded-for'] || request.socket.remoteAddress;
+
+  // สร้าง message สำหรับ log รวม IP address
+  const message = `${request.method} ${getRequestURL(event)} - IP: ${ip} : ${moment().format()}`;
   console.log(message);
 
   // เขียน log ลงไฟล์
@@ -19,3 +22,4 @@ export default defineEventHandler((event) => {
     }
   });
 });
+

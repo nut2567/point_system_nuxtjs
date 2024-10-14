@@ -7,7 +7,7 @@
         'translate-x-0': isSidebarOpen || !isMobile,
       }"
     >
-      <div class="p-4 text-lg font-bold">My App</div>
+      <div class="p-4 text-lg font-bold text-center">My App</div>
       <nav class="flex flex-col space-y-2 mt-4">
         <NuxtLink
           to="/home"
@@ -37,7 +37,11 @@
     </div>
     <!-- Hamburger Icon for Mobile -->
     <button
-      class="fixed top-4 left-4 z-50 text-white bg-gray-800 p-2 rounded-md focus:outline-none sm:hidden"
+      class="fixed top-4 left-4 z-50 text-white p-2 rounded-md focus:outline-none sm:hidden"
+      :class="{
+        'bg-gray-800': !isSidebarOpen,
+        'bg-gray-200': isSidebarOpen,
+      }"
       @click="toggleSidebar"
     >
       <svg

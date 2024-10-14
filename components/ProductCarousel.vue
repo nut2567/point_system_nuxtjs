@@ -1,6 +1,6 @@
 <template>
   <div class="rewards-carousel">
-    <h2 class="carousel-title">Exclusive Product</h2>
+    <h2 class="font-semibold mb-10 mt-2 text-3xl text-center">Exclusive Product</h2>
     <div
       class="carousel-container"
       @mouseenter="stopCarousel"
