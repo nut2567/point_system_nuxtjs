@@ -57,7 +57,7 @@ onMounted(async () => {
   fetchRewardDetails(id.value);
 
   console.log("coupong", store.userinfo.coupong);
-  const coupong = store.userinfo.coupong
+  const coupong = store.userinfo.coupong;
   let foundReward = coupong.some((item) => item.reward_id == id.value);
   if (foundReward) {
     UsedReward.value = !foundReward;
@@ -66,11 +66,9 @@ onMounted(async () => {
 
 const fetchRewardDetails = async (rewardId) => {
   try {
-    const response = await axios.get(
-      `http://localhost:5000/rewards/${rewardId}`
-    );
-    console.log("Reward details:", response.data);
-    reward.value = response.data;
+    const response = await axios.get(`/api/rewards/${rewardId}`);
+    console.log("Reward details:", response.data.reward);
+    reward.value = response.data.reward;
   } catch (error) {
     console.error("Error fetching reward details:", error);
     if (error.response && error.response.status === 404) {
@@ -83,7 +81,7 @@ const fetchRewardDetails = async (rewardId) => {
 
 const fetchredeemReward = async (rewardId) => {
   try {
-    const response = await axios.put(`http://localhost:5000/users/Redeem`, {
+    const response = await axios.put(`/api/rewards/Redeem`, {
       username: store.userinfo.username,
       Redeem_id: rewardId, // ส่ง id ของ reward ที่ผู้ใช้ต้องการ redeem
     });
@@ -102,6 +100,8 @@ const fetchredeemReward = async (rewardId) => {
       title: "Your work has been saved",
       showConfirmButton: false,
       timer: 1500,
+    }).then((result) => {
+      
     });
   } catch (error) {
     console.error("Error fetching reward details:", error);

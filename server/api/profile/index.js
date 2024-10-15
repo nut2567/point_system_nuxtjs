@@ -43,5 +43,5 @@ export default defineEventHandler(async (event) => {
   }
 
   // ส่งข้อมูลผู้ใช้กลับไป
-  return { status: 200, user };
+  return { user };
 });

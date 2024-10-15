@@ -2,8 +2,7 @@
 import { rewards } from '../mockData';
 
 export default defineEventHandler(async () => {
-    // return { rewards };
-    return null;
+    return { rewards };
     switch (method) {
         case 'GET':
             return await handleGetUser(event);

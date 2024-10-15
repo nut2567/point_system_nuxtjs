@@ -77,7 +77,7 @@ const goToRewardDetail = (reward) => {
 };
 
 const { data, pending, error, execute } = useFetch(
-  "http://localhost:5000/rewards",
+  "/api/rewards",
   {
     method: "GET",
     // lazy: true, // กำหนดให้โหลดข้อมูลเฉพาะเมื่อเรียกใช้งาน
@@ -88,8 +88,9 @@ const { data, pending, error, execute } = useFetch(
 const fetchRewards = async () => {
   await execute(); // เรียกใช้งาน execute เพื่อโหลดข้อมูล
   // ตรวจสอบสถานะการโหลดข้อมูล
-  if (data.value) {
-    rewards.value = data.value; // นำข้อมูลที่ได้จาก data ไปเก็บใน rewards
+  console.log(data.value.rewards); //
+  if (data.value.rewards) {
+    rewards.value = data.value.rewards; // นำข้อมูลที่ได้จาก data ไปเก็บใน rewards
   }
   // ตรวจสอบข้อผิดพลาด
   if (error.value) {

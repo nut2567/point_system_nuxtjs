@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col items-center">
     <header
-      class="header  bg-blue-600 text-white p-4 text-center text-2xl"
+      class="bg-blue-800 w-full text-white p-4 text-center text-2xl"
     >
       Welcome to the Points System
     </header>
@@ -31,12 +31,5 @@ if (process.server) {
 </script>
   
   <style scoped>
-.header {
-  background-color: #d40707;
-  color: #fff;
-  width: 100%; /* ยาวเต็มหน้าจอ */
-  padding: 1rem;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
 </style>
   

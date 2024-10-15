@@ -38,9 +38,10 @@ const Product = ref([]);
 
 const fetchProducts = async () => {
   try {
-    const response = await axios.get("http://localhost:5000/Product");
-    Product.value = response.data;
-    console.log(response);
+    // const response = await axios.get("http://localhost:5000/Product");
+    const response = await axios.get("/api/product");
+    Product.value = response.data.Product;
+    console.log(Product.value);
   } catch (error) {
     console.error("Error fetching Product", error);
   }
