@@ -4,19 +4,20 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   ssr: true,
   target: 'static',
-  head: {
-    title: 'Point System',
-    meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-
-    ],
-    link: [
-      {
-        rel: 'stylesheet',
-        href: 'https://fonts.googleapis.com/icon?family=Material+Icons'
-      }
-    ]
+  app: {
+    head: {
+      title: 'Point System',
+      meta: [
+        { charset: 'utf-8' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      ],
+      link: [
+        {
+          rel: 'stylesheet',
+          href: 'https://fonts.googleapis.com/icon?family=Material+Icons'
+        }
+      ]
+    }
   },
   // css: ['@/assets/tailwind.css'],
   buildModules: [],
@@ -27,7 +28,8 @@ export default defineNuxtConfig({
   nitro: {
     // เพิ่ม middleware ที่เราเขียนลงใน nitro
     routeRules: {
-      '/api/**': { appMiddleware: ['logger'] },
+      // '/api/**': { appMiddleware: ['logger'] },
+      '/api/profile': { middleware: ['verifyToken'] },
     },
   },
   build: {},

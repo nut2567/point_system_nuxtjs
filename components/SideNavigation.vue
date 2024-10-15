@@ -13,25 +13,35 @@
           to="/home"
           class="flex items-center p-2 hover:bg-gray-700 rounded"
         >
-          <span class="ml-2">Home</span>
+          <div class="flex">
+            <i class="material-icons items-center flex mr-2">home</i>
+            <span class="ml-2">Home</span>
+          </div>
         </NuxtLink>
         <NuxtLink
           to="/reward"
           class="flex items-center p-2 hover:bg-gray-700 rounded"
-        >
-          <span class="ml-2">Rewards</span>
+          ><div class="flex">
+            <i class="material-icons items-center flex mr-2">stars</i>
+            <span class="ml-2">Rewards</span>
+          </div>
         </NuxtLink>
         <NuxtLink
           to="/profile"
           class="flex items-center p-2 hover:bg-gray-700 rounded"
-        >
-          <span class="ml-2">Profile</span>
+          ><div class="flex">
+            <i class="material-icons items-center flex mr-2">person</i>
+            <span class="ml-2">Profile</span>
+          </div>
         </NuxtLink>
         <div
           @click="logout"
           class="flex items-center p-2 hover:bg-gray-700 rounded cursor-pointer"
         >
-          <span class="ml-2">Logout</span>
+          <div class="flex">
+            <i class="material-icons items-center flex mr-2">logout</i>
+            <span class="ml-2">Logout</span>
+          </div>
         </div>
       </nav>
     </div>

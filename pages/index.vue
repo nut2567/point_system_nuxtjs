@@ -13,14 +13,17 @@
           >
             Username
           </label>
-          <input
-            v-model="username"
-            type="text"
-            id="username"
-            class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-            placeholder="Enter your username"
-            autocomplete="current-password"
-          />
+          <div class="flex">
+            <i class="material-icons items-center flex mr-2">person</i>
+            <input
+              v-model="username"
+              type="text"
+              id="username"
+              class="w-full rounded-md"
+              placeholder="Enter your username"
+              autocomplete="current-password"
+            />
+          </div>
         </div>
 
         <!-- Password -->
@@ -31,15 +34,35 @@
           >
             Password
           </label>
-          <input
-            v-model="password"
-            type="password"
-            id="password"
-            class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-            placeholder="Enter your password"
-            autocomplete="current-password"
-          />
+
+          <div class="flex">
+            <i class="material-icons items-center flex mr-2">lock</i>
+            <input
+              v-model="password"
+              type="password"
+              id="password"
+              class="w-full rounded-md focus:outline-none"
+              placeholder="Enter your password"
+              autocomplete="current-password"
+            />
+          </div>
         </div>
+        <div class="field spaced mb-5">
+          <div class="control">
+            <label class="checkbox">
+              <input
+                class="mr-2"
+                type="checkbox"
+                value="true"
+                name="remember"
+                v-model="Remember"
+              />
+              <span class="check"></span>
+              <span class="control-label">Remember</span>
+            </label>
+          </div>
+        </div>
+
         <!-- Submit Button -->
         <div class="flex items-center justify-between">
           <button
@@ -68,14 +91,35 @@
 </template>
 <script setup>
 // State
-const username = ref("");
-const StatusLogin = ref(true);
-const password = ref("");
 import { useMyStore } from "~/stores/index";
-
 import axios from "axios";
+
+const username = ref("");
+const password = ref("");
+const StatusLogin = ref(true);
+const Remember = ref(false);
 const store = useMyStore();
 const router = useRouter();
+
+onMounted(() => {
+  if (process.client) {
+    // ดึงค่าจาก localStorage ถ้ามี
+    username.value = localStorage.getItem("username") || '';
+    password.value = localStorage.getItem("password") || '';
+    Remember.value = username.value?true:false;
+  }
+});
+// Watcher เพื่อตรวจสอบการเปลี่ยนแปลงของ Remember
+watch(Remember, (newValue) => {
+console.log(Remember.value);
+  if (newValue) {
+    localStorage.setItem("username", username.value);
+    localStorage.setItem("password", password.value);
+  } else {
+    localStorage.removeItem("username");
+    localStorage.removeItem("password");
+  }
+});
 
 definePageMeta({
   layout: "empty",
@@ -92,7 +136,7 @@ const login = async () => {
       password: password.value,
     });
     console.log("Logging in with:", response);
-      // localStorage.setItem("token", response.token); // เก็บ token ใน local storage
+    // localStorage.setItem("token", response.token); // เก็บ token ใน local storage
     useCookie("token").value = response.data.token;
 
     console.log(response.data);
