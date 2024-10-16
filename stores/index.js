@@ -42,7 +42,7 @@ export const useMyStore = defineStore('myStore', {
 
             try {
                 // ใช้ useFetch ในการดึงข้อมูลแทน axios for ssr
-                const { data, error } = await useFetch('http://localhost:5000/users/profile', {
+                const { data, error } = await useFetch('/api/profile', {
                     method: "get",
                     headers: {
                         Authorization: `Bearer ${token}` // ส่ง token ถ้ามี
@@ -55,8 +55,8 @@ export const useMyStore = defineStore('myStore', {
                     return { data:  error.value};
                 }
 
-                this.userinfo = data.value;
-                return { data: data.value };
+                this.userinfo = data.value.user;
+                return { data: data.value.user };
             } catch (error) {
                 // console.error('Error fetching user profile:', error);
                 // ตรวจสอบว่าโทเคนหมดอายุหรือไม่

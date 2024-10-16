@@ -35,6 +35,14 @@
             <span class="ml-2">Profile</span>
           </div>
         </NuxtLink>
+        <NuxtLink
+          to="/dashboard"
+          class="flex items-center p-2 hover:bg-gray-700 rounded"
+          ><div class="flex">
+            <i class="material-icons items-center flex mr-2">dashboard</i>
+            <span class="ml-2">Dashboard</span>
+          </div>
+        </NuxtLink>
         <div
           @click="logout"
           class="flex items-center p-2 hover:bg-gray-700 rounded cursor-pointer"
