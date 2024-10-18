@@ -576,5 +576,5 @@ const chartOptions = ref({
 });
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 </style>

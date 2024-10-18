@@ -14,12 +14,12 @@ export default defineEventHandler((event) => {
   console.log(message);
 
   // เขียน log ลงไฟล์
-  fs.appendFile('logSys.txt', message + '\n', (err) => {
-    if (err) {
-      console.error("Error writing to log file", err);
-      response.statusCode = 500;
-      return response.end('Internal Server Error');
-    }
-  });
+  // fs.appendFile('logSys.txt', message + '\n', (err) => {
+  //   if (err) {
+  //     console.error("Error writing to log file", err);
+  //     response.statusCode = 500;
+  //     return response.end('Internal Server Error');
+  //   }
+  // });
 });
 

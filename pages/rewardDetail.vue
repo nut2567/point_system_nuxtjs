@@ -1,31 +1,41 @@
 <template>
-  <div class="reward-detail-page">
+  <div class="reward-detail-page mt-10">
     <button
       class="back-button px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 text-sm md:text-base lg:text-lg"
       @click="goBackToHome"
     >
       &larr; Back to Home
     </button>
-
-    <div class="reward-detail-container">
-      <img :src="reward.image" alt="Reward Image" class="reward-image" />
-      <div class="reward-info">
-        <h1 class="reward-title">{{ reward.title }}</h1>
-        <p class="reward-description">{{ reward.description }}</p>
-        <div class="reward-meta">
-          <p><strong>Points Required:</strong> {{ reward.points }}</p>
-          <p><strong>Expiry Date:</strong> {{ reward.expiryDate }}</p>
+    <div class="flex flex-col my-10">
+      <div v-if="!UsedReward" class="flex justify-center items-center text-center text-lg text-lime-500">
+        <p><strong>Redeemed your reward.</strong></p>        
+        <i class="material-icons ml-2 text-4xl">verified</i>
+      </div>
+      <div v-if="reward.points > store.userinfo.points" 
+        class="flex justify-center items-center text-center text-lg text-red-500">
+        <p><strong>Not enough points.</strong></p>        
+        <i class="material-icons ml-2 text-4xl">cancel</i>
+      </div>
+      <div class="reward-detail-container my-10">
+        <img :src="reward.image" alt="Reward Image" class="reward-image" />
+        <div class="reward-info">
+          <h1 class="reward-title">{{ reward.title }}</h1>
+          <p class="reward-description">{{ reward.description }}</p>
+          <div class="reward-meta">
+            <p><strong>Points Required:</strong> {{ reward.points }}</p>
+            <p><strong>Expiry Date:</strong> {{ reward.expiryDate }}</p>
+          </div>
+          <button
+            v-if="reward.points <= store.userinfo.points && UsedReward"
+            class="redeem-button"
+            @click="redeemReward"
+          >
+            Redeem Reward
+          </button>
+          <button v-else class="redeem-button-disabled" disabled>
+            Redeem Reward
+          </button>
         </div>
-        <button
-          v-if="reward.points < store.userinfo.points && UsedReward"
-          class="redeem-button"
-          @click="redeemReward"
-        >
-          Redeem Reward
-        </button>
-        <button v-else class="redeem-button-disabled" disabled>
-          Redeem Reward
-        </button>
       </div>
     </div>
   </div>
@@ -100,9 +110,7 @@ const fetchredeemReward = async (rewardId) => {
       title: "Your work has been saved",
       showConfirmButton: false,
       timer: 1500,
-    }).then((result) => {
-      
-    });
+    }).then((result) => {});
   } catch (error) {
     console.error("Error fetching reward details:", error);
     if (error.response && error.response.status === 404) {
@@ -221,9 +229,7 @@ const goBackToHome = () => {
 .reward-detail-page {
   padding-top: 6rem;
 }
-</style>
 
-<style scoped lang="scss">
 .redeem-button-disabled {
   background: gray;
   color: white;
@@ -234,6 +240,7 @@ const goBackToHome = () => {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   padding: 10px 20px;
 }
+
 .redeem-button {
   position: relative;
   padding: 10px 20px;
@@ -246,22 +253,22 @@ const goBackToHome = () => {
   overflow: hidden;
   transition: background 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
 
-  &:hover {
-    box-shadow: 0 0 20px rgba(0, 255, 133, 0.6), 0 0 30px rgba(0, 122, 255, 0.4);
-  }
+.redeem-button:hover {
+  box-shadow: 0 0 20px rgba(0, 255, 133, 0.6), 0 0 30px rgba(0, 122, 255, 0.4);
+}
 
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 300%;
-    height: 300%;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.6), transparent);
-    transform: translate(-50%, -50%);
-    transition: transform 0.15s ease;
-    pointer-events: none;
-  }
+.redeem-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 300%;
+  height: 300%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.6), transparent);
+  transform: translate(-50%, -50%);
+  transition: transform 0.15s ease;
+  pointer-events: none;
 }
 </style>
