@@ -58,26 +58,10 @@
               Performance
             </p>
           </div>
-          <BarChart />
-          <!-- <div class="chart-area">
-            <div class="h-full">
-              <div class="chartjs-size-monitor">
-                <div class="chartjs-size-monitor-expand">
-                  <div></div>
-                </div>
-                <div class="chartjs-size-monitor-shrink">
-                  <div></div>
-                </div>
-              </div>
-              <canvas
-                id="big-line-chart"
-                width="2992"
-                height="1000"
-                class="chartjs-render-monitor block"
-                style="height: 400px; width: 1197px"
-              ></canvas>
-            </div>
-          </div> -->
+          <div class="p-6">
+          <Bar :data="chartData" 
+          :options="chartOptions" 
+          /></div>
         </div>
       </div>
 
@@ -555,8 +539,8 @@ definePageMeta({
   middleware: "token",
 });
 
-import { defineComponent } from 'vue'
-import { Bar } from 'vue-chartjs'
+import { Bar } from 'vue-chartjs';
+
 import {
   Chart as ChartJS,
   Title,
@@ -564,46 +548,33 @@ import {
   Legend,
   BarElement,
   CategoryScale,
+  LinearScale,
+} from 'chart.js';
+
+ChartJS.register(
+  Title,
+  Tooltip,
+  Legend,
+  BarElement,
+  CategoryScale,
   LinearScale
-} from 'chart.js'
+);
 
-// ลงทะเบียน component ของ chart.js ที่ต้องการใช้
-ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
-
-const chartData = {
-  labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+const chartData = ref({
+  labels: ['January', 'February', 'March', 'April', 'May'],
   datasets: [
     {
-      label: 'My First dataset',
-      backgroundColor: '#42A5F5',
-      data: [40, 20, 12, 39, 10, 40, 39]
-    }
-  ]
-}
-
-const chartOptions = {
+      label: 'Data One',
+      backgroundColor: '#f87979',
+      data: [40, 20, 12, 50, 10],
+    },
+  ],
+});
+const chartOptions = ref({
   responsive: true,
-  maintainAspectRatio: false
-}
-
-// ใช้ component Bar จาก vue-chartjs
-const BarChart = defineComponent({
-  components: {
-    Bar
-  },
-  setup() {
-    return {
-      chartData,
-      chartOptions
-    }
-  }
-})
+  maintainAspectRatio: true,
+});
 </script>
 
 <style lang="scss" scoped>
-.chart-container {
-  position: relative;
-  width: 80%;
-  margin: auto;
-}
 </style>

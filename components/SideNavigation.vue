@@ -2,7 +2,7 @@
   <div>
     <div
       class="fixed inset-0 w-64 bg-slate-800 text-white flex flex-col transform transition-transform 
-      duration-300 ease-in-out z-50"
+      duration-300 z-50"
       :class="{
         '-translate-x-full': !isSidebarOpen && isMobile,
         'translate-x-0': isSidebarOpen || !isMobile,

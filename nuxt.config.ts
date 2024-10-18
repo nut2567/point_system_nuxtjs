@@ -3,6 +3,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
   ssr: true,
+  // ssr: false,
   target: 'static',
   app: {
     head: {
@@ -18,15 +19,15 @@ export default defineNuxtConfig({
         }
       ],
       link: [
-        {
-          rel: 'stylesheet',
-          href: 'https://fonts.googleapis.com/icon?family=Material+Icons'
-        },
         // Favicon (ไอคอนของเว็บไซต์)
         {
           rel: 'icon',
           type: 'image/x-icon',
           href: '/favicon.ico' // ไอคอนของเว็บไซต์
+        },
+        {
+          rel: 'stylesheet',
+          href: 'https://fonts.googleapis.com/icon?family=Material+Icons'
         },
         // รูปแบบ Apple Touch Icon
         {
@@ -50,4 +51,7 @@ export default defineNuxtConfig({
     },
   },
   build: {},
+  devServer: {
+    port: 4000, 
+  },
 })
