@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
-import { users } from './mockData'; 
+import { getUsers  } from '../data/state'; 
 
+const users = getUsers(); 
 const secretKey = 'P@55w0rD'; // Secret key สำหรับ sign token
 
 export default defineEventHandler(async (event) => {

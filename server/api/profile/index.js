@@ -1,9 +1,10 @@
-import { users } from '../mockData'; 
+import { getUsers  } from '../../data/state'; 
 import jwt from 'jsonwebtoken';
 import { sendError, createError } from 'h3';
 
 const secretKey = 'P@55w0rD'; // ใช้ secret key ของคุณ
 
+const users = getUsers(); 
 // ตรวจสอบ token
 const verifyToken = async (event) => {
   const authorization = event.node.req.headers['authorization'];

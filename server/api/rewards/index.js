@@ -1,5 +1,5 @@
 
-import { rewards } from '../mockData';
+import { rewards } from '../../data/mockData';
 
 export default defineEventHandler(async () => {
     return { rewards };
