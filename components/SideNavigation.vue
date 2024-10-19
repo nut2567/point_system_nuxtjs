@@ -1,8 +1,7 @@
 <template>
   <div>
     <div
-      class="fixed inset-0 w-64 bg-slate-800 text-white flex flex-col transform transition-transform 
-      duration-300 z-50"
+      class="fixed inset-0 w-64 bg-slate-800 text-white flex flex-col transform transition-transform duration-300 z-50"
       :class="{
         '-translate-x-full': !isSidebarOpen && isMobile,
         'translate-x-0': isSidebarOpen || !isMobile,
@@ -53,6 +52,28 @@
           </div>
         </div>
       </nav>
+        <div class="py-5"></div>
+        <div class="rainbow-line w-full h-2"></div>
+        <div
+          @click="restart_users"
+          class="flex items-center p-2 hover:bg-gray-700 rounded cursor-pointer"
+        >
+          <div class="flex">
+            <i class="material-icons items-center flex mr-2">restart_alt</i>
+            <span class="ml-2">reset users data</span>
+          </div>
+        </div>
+        <div className="fixed bottom-0  w-full">
+          <div class="flex items-center justify-center  w-full "><p>powered by</p>
+          <div className=" ml-2">
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Nuxt_logo_%282021%29.svg/221px-Nuxt_logo_%282021%29.svg.png"
+              alt="Next.js logo"
+              class="reward-image w-26 h-7 brightness-125  bg-slate-500 px-2"
+            />
+          </div></div>
+          
+        </div>
     </div>
     <!-- Hamburger Icon for Mobile -->
     <button
@@ -84,6 +105,7 @@
   <script setup>
 import Swal from "sweetalert2";
 import { useMyStore } from "~/stores/index";
+import axios from "axios";
 
 const store = useMyStore();
 const router = useRouter();
@@ -112,6 +134,14 @@ onMounted(() => {
   window.addEventListener("resize", checkScreenSize); // ตรวจสอบเมื่อหน้าจอมีการ resize
 });
 
+const restart_users = async () => {
+  const response = await axios.post("/api/user/reset",{}, {
+    headers: {
+      Authorization: `Bearer ${useCookie('token').value}`, // ส่ง token ถ้ามี
+    },
+  });
+  console.log(response);
+};
 // ฟังก์ชัน Logout
 const logout = () => {
   Swal.fire({
@@ -149,6 +179,32 @@ const logout = () => {
 </script>
   
   <style scoped>
+@keyframes moveRainbow {
+  0% {
+    background-position: 0% 0;
+  }
+  50% {
+    background-position: 70% 0;
+  }
+  100% {
+    background-position: 130% 0;
+  }
+}
+.rainbow-line {
+  background: linear-gradient(
+    90deg,
+    red,
+    orange,
+    yellow,
+    green,
+    blue,
+    indigo,
+    violet
+  );
+  background-size: 400%;
+  animation: moveRainbow 3s linear infinite;
+}
+
 .material-icons {
   font-size: 24px;
 }

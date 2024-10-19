@@ -1,10 +1,9 @@
-import { getUsers  } from '../../data/state'; 
+import { users  } from '../../data/mockData'; 
 import jwt from 'jsonwebtoken';
 import { sendError, createError } from 'h3';
 
 const secretKey = 'P@55w0rD'; // ใช้ secret key ของคุณ
 
-const users = getUsers(); 
 // ตรวจสอบ token
 const verifyToken = async (event) => {
   const authorization = event.node.req.headers['authorization'];
@@ -29,6 +28,8 @@ const verifyToken = async (event) => {
     }
   }
 };
+
+export { verifyToken };
 
 // Handler สำหรับดึงข้อมูลผู้ใช้
 export default defineEventHandler(async (event) => {

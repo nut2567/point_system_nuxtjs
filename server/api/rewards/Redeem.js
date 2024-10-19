@@ -1,8 +1,6 @@
 
-import { rewards } from '../../data/mockData';
-import { getUsers  } from '../../data/state';
+import { users, rewards } from '../../data/mockData';
 
-const users = getUsers(); 
 export default defineEventHandler(async (event) => {
 
 
