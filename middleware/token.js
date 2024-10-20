@@ -7,11 +7,11 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     const tokenCookie = useCookie('token'); // ประกาศ tokenCookie
     const token = tokenCookie.value;
 
-    const Token_expired = () => {
+    const Token_expired = (text) => {
         Swal.fire({
             position: "top",
             icon: "warning",
-            title: "Token expired!",
+            title: text,
             showConfirmButton: false,
             timer: 1500,
         })
@@ -34,11 +34,11 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
             tokenCookie.value = '';  // ตั้งค่าเป็นค่าว่าง
             tokenCookie.expire = new Date(0);  // กำหนดให้หมดอายุไปแล้ว;
 
-            Token_expired()
+            Token_expired("Token expired!")
         }
 
     } else {
-        Token_expired()
+        Token_expired("not have permission")
     }
 
 });
