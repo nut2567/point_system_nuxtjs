@@ -63,9 +63,9 @@
             <span class="ml-2">reset users data</span>
           </div>
         </div>
-        <div className="fixed bottom-0  w-full">
+        <div class="fixed bottom-0  w-full">
           <div class="flex items-center justify-center  w-full "><p>powered by</p>
-          <div className=" ml-2">
+          <div class=" ml-2">
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Nuxt_logo_%282021%29.svg/221px-Nuxt_logo_%282021%29.svg.png"
               alt="Next.js logo"
