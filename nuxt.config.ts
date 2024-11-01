@@ -15,7 +15,7 @@ export default defineNuxtConfig({
         {
           hid: 'og:image',
           property: 'og:image',
-          content: '/images/64a0d051-834b-42fc-bf25-de3c0ba8b2e5_300.jpg'  // รูปภาพที่ใช้เมื่อแชร์ลิ้งค์
+          content: '/images/S__7667726_0.jpg'  // รูปภาพที่ใช้เมื่อแชร์ลิ้งค์
         }
       ],
       link: [
@@ -42,7 +42,7 @@ export default defineNuxtConfig({
   modules: [
     '@nuxtjs/tailwindcss',
     '@pinia/nuxt',
-  ], 
+  ],
   nitro: {
     // เพิ่ม middleware ที่เราเขียนลงใน nitro
     routeRules: {
@@ -52,6 +52,6 @@ export default defineNuxtConfig({
   },
   build: {},
   devServer: {
-    port: 4000, 
+    port: 4000,
   },
 })
