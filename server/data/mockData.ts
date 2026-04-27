@@ -1,4 +1,39 @@
-const rewards = [
+export type Reward = {
+  id: number;
+  name: string;
+  points: number;
+  image: string;
+  description: string;
+  expiryDate: string;
+  availability: boolean;
+};
+
+export type Product = {
+  id: number;
+  name: string;
+  points: number;
+  image: string;
+};
+
+export type Coupon = {
+  reward_id: number;
+};
+
+export type User = {
+  id: number;
+  name: string;
+  username: string;
+  password: string;
+  email: string;
+  phoneNumber: string;
+  address: string;
+  points: number;
+  joinedDate: string;
+  tier: string;
+  coupong: Coupon[];
+};
+
+export const rewards: Reward[] = [
   { id: 1, name: 'Discount Coupon', points: 100, image: '/images/S__7667726_0.jpg', description: 'Get 10% off on your next purchase', expiryDate: '2024-12-31', availability: true },
   { id: 2, name: 'Gift Voucher', points: 200, image: '/images/S__7667728_0.jpg', description: 'Receive a $20 gift voucher for any purchase', expiryDate: '2024-12-31', availability: true },
   { id: 3, name: 'Free Shipping', points: 150, image: '/images/S__7667729_0.jpg', description: 'Free shipping on your next order', expiryDate: '2024-11-30', availability: true },
@@ -22,7 +57,7 @@ const rewards = [
 ];
 
 
-const Product = [
+export const Product: Product[] = [
   {
     id: 1,
     name: "Discount Coupon",
@@ -80,7 +115,7 @@ const Product = [
   },
 ];
 
-const users = [
+export const users: User[] = [
   {
     id: 1,
     name: 'John Doe',
@@ -147,5 +182,3 @@ const users = [
     coupong: []
   }
 ];
-
-module.exports = { rewards, users, Product };

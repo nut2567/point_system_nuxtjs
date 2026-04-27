@@ -4,7 +4,6 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   ssr: true,
   // ssr: false,
-  target: 'static',
   app: {
     head: {
       title: 'Point System',
@@ -38,7 +37,6 @@ export default defineNuxtConfig({
     }
   },
   // css: ['@/assets/tailwind.css'],
-  buildModules: [],
   modules: [
     '@nuxtjs/tailwindcss',
     '@pinia/nuxt',
@@ -47,7 +45,6 @@ export default defineNuxtConfig({
     // เพิ่ม middleware ที่เราเขียนลงใน nitro
     routeRules: {
       // '/api/**': { appMiddleware: ['logger'] },
-      '/api/profile': { middleware: ['verifyToken'] },
     },
   },
   build: {},

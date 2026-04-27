@@ -21,7 +21,8 @@
               id="username"
               class="w-full rounded-md"
               placeholder="Enter your username"
-              autocomplete="current-password"
+              autocomplete="username"
+              required
             />
           </div>
         </div>
@@ -44,6 +45,7 @@
               class="w-full rounded-md focus:outline-none"
               placeholder="Enter your password"
               autocomplete="current-password"
+              required
             />
           </div>
         </div>
@@ -89,16 +91,14 @@
     </div>
   </div>
 </template>
-<script setup>
+<script setup lang="ts">
 // State
-import { useMyStore } from "~/stores/index";
 import axios from "axios";
 
 const username = ref("");
 const password = ref("");
 const StatusLogin = ref(true);
 const Remember = ref(false);
-const store = useMyStore();
 const router = useRouter();
 
 onMounted(() => {
@@ -127,13 +127,20 @@ definePageMeta({
 });
 
 const login = async () => {
-  console.log("Username:", username.value);
-  console.log("Password:", password.value);
+  StatusLogin.value = true;
+
+  const loginUsername = username.value.trim();
+  const loginPassword = password.value.trim();
+
+  if (!loginUsername || !loginPassword) {
+    StatusLogin.value = false;
+    return;
+  }
 
   try {
     const response = await axios.post("/api/login", {
-      username: username.value,
-      password: password.value,
+      username: loginUsername,
+      password: loginPassword,
     });
     console.log("Logging in with:", response);
     // localStorage.setItem("token", response.token); // เก็บ token ใน local storage
@@ -147,6 +154,7 @@ const login = async () => {
       console.error("Login failed:");
     }
   } catch (error) {
+    StatusLogin.value = false;
     console.error("Error during login:", error);
   }
 };
