@@ -65,38 +65,24 @@
         </div>
       </div>
 
-      <div class="notification blue">
+      <div class="rounded-lg border border-slate-200 bg-white shadow-sm">
         <div
-          class="flex border rounded p-3 flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 mb-5"
+          class="flex flex-col gap-3 border-b border-slate-200 p-4 md:flex-row md:items-center md:justify-between"
         >
-          <div class="">
-            <p class="">
-              <span class="icon"><i class="mdi mdi-finance"></i></span>
-              Responsive table
-            </p>
+          <div>
+            <p class="text-sm font-medium text-slate-500">Responsive table</p>
+            <h2 class="text-lg font-semibold text-slate-900">Clients</h2>
           </div>
-          <button
-            type="button"
-            class="button small textual --jb-notification-dismiss"
-          >
-            Dismiss
-          </button>
-        </div>
-      </div>
-
-      <div class="card has-table">
-        <div class="border rounded p-3">
-          <p class="">
-            <span class="icon"><i class="mdi mdi-finance"></i></span>
-            Clients
-          </p>
+          <div class="text-sm text-slate-500">
+            Scroll horizontally to view more columns.
+          </div>
         </div>
 
-        <div class="border rounded p-3">
-          <table class="w-full text-left">
+        <div class="dashboard-table-scroll">
+          <table class="dashboard-table">
             <thead>
               <tr>
-                <th></th>
+                <th class="sticky-col avatar-col"></th>
                 <th>Name</th>
                 <th>Company</th>
                 <th>City</th>
@@ -107,7 +93,7 @@
             </thead>
             <tbody>
               <tr>
-                <td class="image-cell">
+                <td class="image-cell sticky-col avatar-col">
                   <div class="image">
                     <img
                       src="https://avatars.dicebear.com/v2/initials/rebecca-bauch.svg"
@@ -148,7 +134,7 @@
                 </td>
               </tr>
               <tr>
-                <td class="image-cell">
+                <td class="image-cell sticky-col avatar-col">
                   <div class="image">
                     <img
                       src="https://avatars.dicebear.com/v2/initials/felicita-yundt.svg"
@@ -189,7 +175,7 @@
                 </td>
               </tr>
               <tr>
-                <td class="image-cell">
+                <td class="image-cell sticky-col avatar-col">
                   <div class="image">
                     <img
                       src="https://avatars.dicebear.com/v2/initials/mr-larry-satterfield-v.svg"
@@ -230,7 +216,7 @@
                 </td>
               </tr>
               <tr>
-                <td class="image-cell">
+                <td class="image-cell sticky-col avatar-col">
                   <div class="image">
                     <img
                       src="https://avatars.dicebear.com/v2/initials/mr-broderick-kub.svg"
@@ -271,7 +257,7 @@
                 </td>
               </tr>
               <tr>
-                <td class="image-cell">
+                <td class="image-cell sticky-col avatar-col">
                   <div class="image">
                     <img
                       src="https://avatars.dicebear.com/v2/initials/barry-weber.svg"
@@ -312,7 +298,7 @@
                 </td>
               </tr>
               <tr>
-                <td class="image-cell">
+                <td class="image-cell sticky-col avatar-col">
                   <div class="image">
                     <img
                       src="https://avatars.dicebear.com/v2/initials/bert-kautzer-md.svg"
@@ -353,7 +339,7 @@
                 </td>
               </tr>
               <tr>
-                <td class="image-cell">
+                <td class="image-cell sticky-col avatar-col">
                   <div class="image">
                     <img
                       src="https://avatars.dicebear.com/v2/initials/lonzo-steuber.svg"
@@ -394,7 +380,7 @@
                 </td>
               </tr>
               <tr>
-                <td class="image-cell">
+                <td class="image-cell sticky-col avatar-col">
                   <div class="image">
                     <img
                       src="https://avatars.dicebear.com/v2/initials/jonathon-hahn.svg"
@@ -435,7 +421,7 @@
                 </td>
               </tr>
               <tr>
-                <td class="image-cell">
+                <td class="image-cell sticky-col avatar-col">
                   <div class="image">
                     <img
                       src="https://avatars.dicebear.com/v2/initials/ryley-wuckert.svg"
@@ -476,7 +462,7 @@
                 </td>
               </tr>
               <tr>
-                <td class="image-cell">
+                <td class="image-cell sticky-col avatar-col">
                   <div class="image">
                     <img
                       src="https://avatars.dicebear.com/v2/initials/sienna-hayes.svg"
@@ -518,6 +504,9 @@
               </tr>
             </tbody>
           </table>
+        </div>
+
+        <div class="p-4">
           <div class="table-pagination">
             <div class="flex items-center justify-between">
               <div class="buttons">
@@ -534,7 +523,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 definePageMeta({
   middleware: "token",
 });
@@ -577,4 +566,127 @@ const chartOptions = ref({
 </script>
 
 <style scoped>
+.dashboard-table-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-gutter: stable;
+}
+
+.dashboard-table {
+  min-width: 920px;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+  text-align: left;
+}
+
+.dashboard-table th,
+.dashboard-table td {
+  height: 64px;
+  border-bottom: 1px solid rgb(226 232 240);
+  padding: 0.875rem 1rem;
+  color: rgb(51 65 85);
+  white-space: nowrap;
+}
+
+.dashboard-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  height: 48px;
+  background: rgb(248 250 252);
+  color: rgb(71 85 105);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.dashboard-table tbody tr {
+  background: white;
+}
+
+.dashboard-table tbody tr:hover td {
+  background: rgb(248 250 252);
+}
+
+.dashboard-table .sticky-col {
+  position: sticky;
+  left: 0;
+  z-index: 3;
+  background: inherit;
+  box-shadow: 1px 0 0 rgb(226 232 240), 10px 0 16px -16px rgb(15 23 42);
+}
+
+.dashboard-table thead .sticky-col {
+  z-index: 4;
+  background: rgb(248 250 252);
+}
+
+.dashboard-table .avatar-col {
+  width: 76px;
+  min-width: 76px;
+  max-width: 76px;
+  padding-left: 1rem;
+  padding-right: 0.75rem;
+}
+
+.dashboard-table .image {
+  width: 40px;
+  height: 40px;
+}
+
+.dashboard-table .image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.dashboard-table progress {
+  width: 120px;
+  height: 0.625rem;
+  accent-color: rgb(37 99 235);
+}
+
+.dashboard-table .actions-cell {
+  width: 112px;
+}
+
+.dashboard-table .buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.dashboard-table .button {
+  min-width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 0.375rem;
+  background: rgb(241 245 249);
+  color: rgb(51 65 85);
+}
+
+.dashboard-table .button.blue {
+  background: rgb(219 234 254);
+  color: rgb(29 78 216);
+}
+
+.dashboard-table .button.red {
+  background: rgb(254 226 226);
+  color: rgb(185 28 28);
+}
+
+.table-pagination .button {
+  min-width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 0.375rem;
+  background: rgb(241 245 249);
+  color: rgb(51 65 85);
+}
+
+.table-pagination .button.active {
+  background: rgb(37 99 235);
+  color: white;
+}
 </style>
